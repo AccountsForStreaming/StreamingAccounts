@@ -27,6 +27,9 @@ router.post('/stripe/create-intent', auth, async (req, res, next) => {
       automatic_payment_methods: {
         enabled: true,
       },
+      statement_descriptor: process.env.STRIPE_STATEMENT_DESCRIPTOR || 'STREAMACCTS',
+      statement_descriptor_suffix: process.env.STRIPE_STATEMENT_DESCRIPTOR_SUFFIX || 'ACCT',
+      description: 'Streaming account purchase',
       metadata: {
         userId: (req as any).user.uid,
       },

@@ -10,7 +10,6 @@ import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
 import OrderConfirmation from './pages/OrderConfirmation';
 import Dashboard from './pages/Dashboard';
-import UserOrders from './pages/UserOrders';
 import Admin from './pages/Admin';
 import Login from './components/auth/Login';
 import Register from './components/auth/Register';

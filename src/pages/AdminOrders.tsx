@@ -3,6 +3,8 @@ import { Package, Eye, MessageSquare, CheckCircle, Clock, AlertCircle } from 'lu
 import type { Order } from '../types';
 import { orderService } from '../services/api';
 import { useToast } from '../contexts/ToastContext';
+import { FulfillmentModal } from '../components/admin/FulfillmentModal';
+import { ImageModal } from '../components/common/ImageModal';
 
 const AdminOrders: React.FC = () => {
   const [orders, setOrders] = useState<Order[]>([]);
@@ -11,6 +13,9 @@ const AdminOrders: React.FC = () => {
   const [adminResponse, setAdminResponse] = useState('');
   const [updatingStatus, setUpdatingStatus] = useState<string | null>(null);
   const [addingResponse, setAddingResponse] = useState(false);
+  const [fulfillmentModalOpen, setFulfillmentModalOpen] = useState(false);
+  const [imageModalOpen, setImageModalOpen] = useState(false);
+  const [selectedImage, setSelectedImage] = useState<{ url: string; alt: string; title: string } | null>(null);
   const { showToast } = useToast();
 
   useEffect(() => {
@@ -24,7 +29,7 @@ const AdminOrders: React.FC = () => {
       setOrders(data);
     } catch (error) {
       console.error('Failed to load orders:', error);
-      showToast('Failed to load orders', 'error');
+      showToast('error', 'Failed to load orders');
     } finally {
       setLoading(false);
     }
@@ -34,7 +39,7 @@ const AdminOrders: React.FC = () => {
     try {
       setUpdatingStatus(orderId);
       await orderService.admin.updateStatus(orderId, newStatus);
-      showToast('Order status updated successfully', 'success');
+      showToast('success', 'Order status updated successfully');
       await loadOrders();
       if (selectedOrder && selectedOrder.id === orderId) {
         const updatedOrder = orders.find(o => o.id === orderId);
@@ -44,7 +49,7 @@ const AdminOrders: React.FC = () => {
       }
     } catch (error) {
       console.error('Failed to update order status:', error);
-      showToast('Failed to update order status', 'error');
+      showToast('error', 'Failed to update order status');
     } finally {
       setUpdatingStatus(null);
     }
@@ -56,7 +61,7 @@ const AdminOrders: React.FC = () => {
     try {
       setAddingResponse(true);
       await orderService.admin.addResponse(selectedOrder.id, adminResponse);
-      showToast('Response added successfully', 'success');
+      showToast('success', 'Response added successfully');
       setAdminResponse('');
       await loadOrders();
       const updatedOrder = orders.find(o => o.id === selectedOrder.id);
@@ -65,7 +70,7 @@ const AdminOrders: React.FC = () => {
       }
     } catch (error) {
       console.error('Failed to add response:', error);
-      showToast('Failed to add response', 'error');
+      showToast('error', 'Failed to add response');
     } finally {
       setAddingResponse(false);
     }
@@ -87,6 +92,15 @@ const AdminOrders: React.FC = () => {
         return <AlertCircle className="w-4 h-4 text-orange-500" />;
       default:
         return <Clock className="w-4 h-4 text-gray-500" />;
+    }
+  };
+
+  const handleOrderFulfilled = (fulfilledOrder: Order) => {
+    setOrders(orders.map(order => 
+      order.id === fulfilledOrder.id ? fulfilledOrder : order
+    ));
+    if (selectedOrder && selectedOrder.id === fulfilledOrder.id) {
+      setSelectedOrder(fulfilledOrder);
     }
   };
 
@@ -112,6 +126,16 @@ const AdminOrders: React.FC = () => {
   const formatDate = (date: Date | string) => {
     const d = new Date(date);
     return d.toLocaleDateString() + ' ' + d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  };
+
+  const handleImageClick = (imageUrl: string, alt: string, title: string) => {
+    setSelectedImage({ url: imageUrl, alt, title });
+    setImageModalOpen(true);
+  };
+
+  const closeImageModal = () => {
+    setImageModalOpen(false);
+    setSelectedImage(null);
   };
 
   if (loading) {
@@ -173,7 +197,7 @@ const AdminOrders: React.FC = () => {
                   </div>
                   <div className="flex items-center space-x-2">
                     {order.userMessage && (
-                      <MessageSquare className="w-4 h-4 text-blue-500" title="Has user message" />
+                      <MessageSquare className="w-4 h-4 text-blue-500" />
                     )}
                     <Eye className="w-4 h-4 text-gray-400" />
                   </div>
@@ -266,6 +290,19 @@ const AdminOrders: React.FC = () => {
                       </button>
                     ))}
                   </div>
+                  
+                  {/* Fulfillment Button */}
+                  {selectedOrder.status === 'paid' && !selectedOrder.fulfillment && (
+                    <div className="mt-4">
+                      <button
+                        onClick={() => setFulfillmentModalOpen(true)}
+                        className="w-full bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors flex items-center justify-center space-x-2"
+                      >
+                        <Package className="w-4 h-4" />
+                        <span>Fulfill Order</span>
+                      </button>
+                    </div>
+                  )}
                 </div>
 
                 {/* Messages */}
@@ -314,6 +351,76 @@ const AdminOrders: React.FC = () => {
                   </div>
                 )}
 
+                {/* Fulfillment Details */}
+                {selectedOrder.fulfillment && (
+                  <div>
+                    <h3 className="text-sm font-medium text-gray-900 mb-3">Fulfillment Details</h3>
+                    <div className="bg-green-50 border border-green-200 rounded-lg p-4 space-y-3">
+                      <div className="grid grid-cols-2 gap-4 text-sm">
+                        <div>
+                          <span className="text-gray-500">Account Email:</span>
+                          <div className="font-medium">{selectedOrder.fulfillment.accountDetails.email}</div>
+                        </div>
+                        <div>
+                          <span className="text-gray-500">Account Password:</span>
+                          <div className="font-medium">{selectedOrder.fulfillment.accountDetails.password}</div>
+                        </div>
+                        {selectedOrder.fulfillment.accountDetails.additionalInfo && (
+                          <div className="col-span-2">
+                            <span className="text-gray-500">Additional Info:</span>
+                            <div className="font-medium">{selectedOrder.fulfillment.accountDetails.additionalInfo}</div>
+                          </div>
+                        )}
+                        <div>
+                          <span className="text-gray-500">Fulfilled At:</span>
+                          <div className="font-medium">{formatDate(selectedOrder.fulfillment.fulfilledAt)}</div>
+                        </div>
+                        <div>
+                          <span className="text-gray-500">Account Tested:</span>
+                          <div className="font-medium">
+                            {selectedOrder.fulfillment.accountTested ? (
+                              <span className="text-green-600">✓ Yes</span>
+                            ) : (
+                              <span className="text-red-600">✗ No</span>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                      
+                      {selectedOrder.fulfillment.notes && (
+                        <div>
+                          <span className="text-gray-500 text-sm">Admin Notes:</span>
+                          <div className="font-medium text-sm">{selectedOrder.fulfillment.notes}</div>
+                        </div>
+                      )}
+                      
+                      {selectedOrder.fulfillment.screenshotUrl && (
+                        <div>
+                          <span className="text-gray-500 text-sm">Screenshot:</span>
+                          <div className="mt-2">
+                            <img
+                              src={selectedOrder.fulfillment.screenshotUrl.startsWith('http') 
+                                ? selectedOrder.fulfillment.screenshotUrl 
+                                : `http://localhost:3001${selectedOrder.fulfillment.screenshotUrl}`}
+                              alt="Account screenshot"
+                              className="max-w-full h-auto rounded-lg border border-gray-300 cursor-pointer hover:border-gray-400 transition-colors"
+                              style={{ maxHeight: '200px' }}
+                              onClick={() => handleImageClick(
+                                selectedOrder.fulfillment.screenshotUrl.startsWith('http') 
+                                  ? selectedOrder.fulfillment.screenshotUrl 
+                                  : `http://localhost:3001${selectedOrder.fulfillment.screenshotUrl}`,
+                                'Account screenshot',
+                                `Order #${selectedOrder.id} - Account Screenshot`
+                              )}
+                              title="Click to view full size"
+                            />
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
+
                 {/* Delivered Accounts */}
                 {selectedOrder.deliveredAccounts && selectedOrder.deliveredAccounts.length > 0 && (
                   <div>
@@ -349,6 +456,27 @@ const AdminOrders: React.FC = () => {
           )}
         </div>
       </div>
+      
+      {/* Fulfillment Modal */}
+      {selectedOrder && (
+        <FulfillmentModal
+          order={selectedOrder}
+          isOpen={fulfillmentModalOpen}
+          onClose={() => setFulfillmentModalOpen(false)}
+          onFulfilled={handleOrderFulfilled}
+        />
+      )}
+
+      {/* Image Modal */}
+      {selectedImage && (
+        <ImageModal
+          isOpen={imageModalOpen}
+          onClose={closeImageModal}
+          imageUrl={selectedImage.url}
+          alt={selectedImage.alt}
+          title={selectedImage.title}
+        />
+      )}
     </div>
   );
 };

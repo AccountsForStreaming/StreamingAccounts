@@ -32,6 +32,7 @@ export interface Order {
   deliveredAccounts?: DeliveredAccount[];
   userMessage?: string;
   adminResponse?: string;
+  fulfillment?: OrderFulfillment;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -42,6 +43,19 @@ export interface OrderItem {
   quantity: number;
   unitPrice: number;
   totalPrice: number;
+}
+
+export interface OrderFulfillment {
+  accountDetails: {
+    email: string;
+    password: string;
+    additionalInfo?: string;
+  };
+  screenshotUrl: string;
+  accountTested: boolean;
+  fulfilledBy: string; // Admin user ID
+  fulfilledAt: Date;
+  notes?: string;
 }
 
 export interface DeliveredAccount {

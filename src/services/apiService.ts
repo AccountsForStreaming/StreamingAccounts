@@ -85,6 +85,36 @@ export const orderService = {
     const response: ApiResponse<Order> = await api.get(`/orders/${id}`);
     return response.data || null;
   },
+
+  // Admin methods
+  getAll: async (): Promise<Order[]> => {
+    const response: ApiResponse<Order[]> = await api.get('/orders');
+    return response.data || [];
+  },
+
+  updateStatus: async (id: string, status: string): Promise<Order> => {
+    const response: ApiResponse<Order> = await api.put(`/orders/${id}/status`, { status });
+    return response.data!;
+  },
+
+  sendAdminMessage: async (id: string, message: string): Promise<Order> => {
+    const response: ApiResponse<Order> = await api.put(`/orders/${id}/admin-message`, { message });
+    return response.data!;
+  },
+
+  sendUserMessage: async (id: string, message: string): Promise<Order> => {
+    const response: ApiResponse<Order> = await api.put(`/orders/${id}/user-message`, { message });
+    return response.data!;
+  },
+
+  fulfill: async (id: string, fulfillmentData: FormData): Promise<Order> => {
+    const response: ApiResponse<Order> = await api.post(`/orders/admin/${id}/fulfill`, fulfillmentData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    return response.data!;
+  },
 };
 
 // Payments API

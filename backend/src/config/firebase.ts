@@ -1,6 +1,7 @@
 import { initializeApp, cert, getApps } from 'firebase-admin/app';
 import { getFirestore } from 'firebase-admin/firestore';
 import { getAuth } from 'firebase-admin/auth';
+import { getStorage } from 'firebase-admin/storage';
 import dotenv from 'dotenv';
 import path from 'path';
 
@@ -27,6 +28,7 @@ export const initializeFirebase = () => {
         
         initializeApp({
           credential: cert(serviceAccount),
+          storageBucket: `${process.env.FIREBASE_PROJECT_ID}.firebasestorage.app`,
         });
         
         console.log('✅ Firebase Admin initialized successfully');
@@ -56,3 +58,9 @@ initializeFirebase();
 // Firebase services
 export const db = getFirestore();
 export const auth = getAuth();
+export const storage = getStorage();
+
+// Configure Firestore settings
+db.settings({
+  ignoreUndefinedProperties: true
+});

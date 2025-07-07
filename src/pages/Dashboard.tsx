@@ -1,15 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import { orderService } from '../services/apiService';
+import { orderService } from '../services/api';
+import { useToast } from '../contexts/ToastContext';
 import LoadingSpinner from '../components/ui/LoadingSpinner';
+import { ImageModal } from '../components/common/ImageModal';
 import type { Order } from '../types';
 
 const Dashboard: React.FC = () => {
   const { user } = useAuth();
+  const { showToast } = useToast();
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [messageInput, setMessageInput] = useState<{ [orderId: string]: string }>({});
+  const [sendingMessage, setSendingMessage] = useState<string | null>(null);
+  const [imageModalOpen, setImageModalOpen] = useState(false);
+  const [selectedImage, setSelectedImage] = useState<{ url: string; alt: string; title: string } | null>(null);
 
   useEffect(() => {
     if (user) {
@@ -23,79 +30,66 @@ const Dashboard: React.FC = () => {
     try {
       setLoading(true);
       setError(null);
-      const userOrders = await orderService.getUserOrders(user.id);
+      const userOrders = await orderService.getByUser(user.id);
       setOrders(userOrders);
     } catch (error) {
       console.error('Error loading orders:', error);
       setError('Failed to load orders');
-      // For demo purposes, show sample orders
-      const sampleOrders: Order[] = [
-        {
-          id: 'order-1',
-          userId: user.id,
-          items: [
-            {
-              productId: 'netflix-1',
-              productName: 'Netflix Premium Account',
-              quantity: 1,
-              unitPrice: 15.99,
-              totalPrice: 15.99,
-            },
-          ],
-          totalAmount: 15.99,
-          status: 'fulfilled',
-          paymentMethod: 'stripe',
-          paymentId: 'pi_demo123',
-          deliveredAccounts: [
-            {
-              productId: 'netflix-1',
-              credentials: {
-                email: 'demo@example.com',
-                password: 'DemoPassword123',
-                additionalInfo: 'Valid until next month',
-              },
-              deliveredAt: new Date(Date.now() - 24 * 60 * 60 * 1000), // 1 day ago
-            },
-          ],
-          createdAt: new Date(Date.now() - 48 * 60 * 60 * 1000), // 2 days ago
-          updatedAt: new Date(Date.now() - 24 * 60 * 60 * 1000), // 1 day ago
-        },
-        {
-          id: 'order-2',
-          userId: user.id,
-          items: [
-            {
-              productId: 'spotify-1',
-              productName: 'Spotify Premium Account',
-              quantity: 1,
-              unitPrice: 9.99,
-              totalPrice: 9.99,
-            },
-          ],
-          totalAmount: 9.99,
-          status: 'processing',
-          paymentMethod: 'paypal',
-          paymentId: 'PAYID-demo456',
-          createdAt: new Date(Date.now() - 12 * 60 * 60 * 1000), // 12 hours ago
-          updatedAt: new Date(Date.now() - 12 * 60 * 60 * 1000),
-        },
-      ];
-      setOrders(sampleOrders);
+      setOrders([]); // Show empty state instead of sample data
     } finally {
       setLoading(false);
     }
   };
 
+  const handleSendMessage = async (orderId: string) => {
+    const message = messageInput[orderId]?.trim();
+    if (!message) {
+      showToast('error', 'Please enter a message');
+      return;
+    }
+
+    try {
+      setSendingMessage(orderId);
+      await orderService.addMessage(orderId, message);
+      showToast('success', 'Message sent successfully');
+      
+      // Clear the message input
+      setMessageInput(prev => ({ ...prev, [orderId]: '' }));
+      
+      // Reload orders to show the updated message
+      await loadOrders();
+    } catch (error) {
+      console.error('Error sending message:', error);
+      showToast('error', 'Failed to send message');
+    } finally {
+      setSendingMessage(null);
+    }
+  };
+
+  const handleImageClick = (imageUrl: string, alt: string, title: string) => {
+    setSelectedImage({ url: imageUrl, alt, title });
+    setImageModalOpen(true);
+  };
+
+  const closeImageModal = () => {
+    setImageModalOpen(false);
+    setSelectedImage(null);
+  };
+
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'paid':
-        return 'text-green-600 bg-green-100';
-      case 'processing':
+      case 'pending':
         return 'text-yellow-600 bg-yellow-100';
-      case 'fulfilled':
+      case 'paid':
         return 'text-blue-600 bg-blue-100';
+      case 'processing':
+        return 'text-purple-600 bg-purple-100';
+      case 'fulfilled':
+        return 'text-green-600 bg-green-100';
       case 'cancelled':
         return 'text-red-600 bg-red-100';
+      case 'refunded':
+        return 'text-orange-600 bg-orange-100';
       default:
         return 'text-gray-600 bg-gray-100';
     }
@@ -247,6 +241,102 @@ const Dashboard: React.FC = () => {
                     </div>
                   )}
 
+                  {/* Fulfillment Details */}
+                  {order.fulfillment && (
+                    <div className="bg-green-50 p-4 rounded-lg mb-4">
+                      <h4 className="font-medium text-green-900 mb-3">✓ Your Account Details</h4>
+                      <div className="space-y-2 text-sm">
+                        <div className="grid grid-cols-2 gap-4">
+                          <div>
+                            <p><strong>Email:</strong> {order.fulfillment.accountDetails.email}</p>
+                          </div>
+                          <div>
+                            <p><strong>Password:</strong> {order.fulfillment.accountDetails.password}</p>
+                          </div>
+                        </div>
+                        {order.fulfillment.accountDetails.additionalInfo && (
+                          <div>
+                            <p><strong>Additional Info:</strong> {order.fulfillment.accountDetails.additionalInfo}</p>
+                          </div>
+                        )}
+                        <div className="border-t pt-2 mt-3">
+                          <p className="text-green-700 text-xs">
+                            <strong>Delivered:</strong> {new Date(order.fulfillment.fulfilledAt).toLocaleDateString()} at {new Date(order.fulfillment.fulfilledAt).toLocaleTimeString()}
+                          </p>
+                          <p className="text-green-700 text-xs">
+                            <strong>Status:</strong> Account tested and verified ✓
+                          </p>
+                        </div>
+                        {order.fulfillment.screenshotUrl && (
+                          <div className="mt-3">
+                            <p className="text-xs text-green-700 mb-2"><strong>Verification Screenshot:</strong></p>
+                            <img
+                              src={order.fulfillment.screenshotUrl.startsWith('http') 
+                                ? order.fulfillment.screenshotUrl 
+                                : `http://localhost:3001${order.fulfillment.screenshotUrl}`}
+                              alt="Account verification"
+                              className="max-w-full h-auto rounded-lg border border-green-300 cursor-pointer hover:border-green-400 transition-colors"
+                              style={{ maxHeight: '150px' }}
+                              onClick={() => handleImageClick(
+                                order.fulfillment.screenshotUrl.startsWith('http') 
+                                  ? order.fulfillment.screenshotUrl 
+                                  : `http://localhost:3001${order.fulfillment.screenshotUrl}`,
+                                'Account verification',
+                                `Order #${order.id} - Verification Screenshot`
+                              )}
+                              title="Click to view full size"
+                            />
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* User Message Section */}
+                  {order.userMessage && (
+                    <div className="bg-blue-50 p-4 rounded-lg mb-4">
+                      <h4 className="font-medium text-blue-900 mb-2">Your Message:</h4>
+                      <p className="text-sm text-blue-800">{order.userMessage}</p>
+                    </div>
+                  )}
+
+                  {/* Admin Response Section */}
+                  {order.adminResponse && (
+                    <div className="bg-purple-50 p-4 rounded-lg mb-4">
+                      <h4 className="font-medium text-purple-900 mb-2">Admin Response:</h4>
+                      <p className="text-sm text-purple-800">{order.adminResponse}</p>
+                    </div>
+                  )}
+
+                  {/* Add Message Section - only show if order is not cancelled */}
+                  {order.status !== 'cancelled' && order.status !== 'refunded' && (
+                    <div className="bg-gray-50 p-4 rounded-lg mb-4">
+                      <h4 className="font-medium text-gray-900 mb-2">Send a Message:</h4>
+                      <div className="space-y-3">
+                        <textarea
+                          value={messageInput[order.id] || ''}
+                          onChange={(e) => setMessageInput(prev => ({ ...prev, [order.id]: e.target.value }))}
+                          placeholder="Ask a question or provide additional information about your order..."
+                          className="w-full px-3 py-2 border border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          rows={2}
+                          maxLength={500}
+                        />
+                        <div className="flex justify-between items-center">
+                          <span className="text-xs text-gray-500">
+                            {messageInput[order.id]?.length || 0}/500
+                          </span>
+                          <button
+                            onClick={() => handleSendMessage(order.id)}
+                            disabled={sendingMessage === order.id || !messageInput[order.id]?.trim()}
+                            className="bg-blue-600 hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+                          >
+                            {sendingMessage === order.id ? 'Sending...' : 'Send Message'}
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
                   <div className="flex justify-between items-center">
                     <div className="text-sm text-gray-600">
                       Payment via {order.paymentMethod.charAt(0).toUpperCase() + order.paymentMethod.slice(1)}
@@ -275,6 +365,17 @@ const Dashboard: React.FC = () => {
             </div>
           )}
         </div>
+
+        {/* Image Modal */}
+        {imageModalOpen && selectedImage && (
+          <ImageModal
+            isOpen={imageModalOpen}
+            onClose={closeImageModal}
+            imageUrl={selectedImage.url}
+            alt={selectedImage.alt}
+            title={selectedImage.title}
+          />
+        )}
       </div>
     </div>
   );
