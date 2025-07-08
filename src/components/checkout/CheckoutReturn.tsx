@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useStripe } from '@stripe/react-stripe-js';
+import { useCart } from '../../contexts/CartContext';
+import { apiService } from '../../services/apiService';
 
 const CheckoutReturn: React.FC = () => {
   const stripe = useStripe();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
+  const { items, total, clearCart } = useCart();
   const [status, setStatus] = useState<'loading' | 'success' | 'error'>('loading');
   const [error, setError] = useState<string | null>(null);
 
@@ -22,6 +25,40 @@ const CheckoutReturn: React.FC = () => {
       return;
     }
 
+    const createOrderAndRedirect = async (paymentIntent: any) => {
+      try {
+        // Create order with the payment intent
+        const orderData = {
+          items: items.map(item => ({
+            productId: item.productId,
+            productName: item.product.name,
+            quantity: item.quantity,
+            unitPrice: item.product.price,
+            totalPrice: item.product.price * item.quantity,
+          })),
+          totalAmount: total,
+          paymentMethod: 'stripe' as const,
+          paymentId: paymentIntent.id,
+        };
+
+        const order = await apiService.createOrder(orderData);
+        
+        if (order) {
+          // Clear cart and redirect to order confirmation
+          clearCart();
+          setTimeout(() => {
+            navigate(`/order-confirmation/${order.id}`);
+          }, 2000);
+        } else {
+          throw new Error('Failed to create order');
+        }
+      } catch (orderError) {
+        console.error('Error creating order:', orderError);
+        setStatus('error');
+        setError('Payment successful but failed to create order. Please contact support.');
+      }
+    };
+
     // Retrieve the PaymentIntent
     stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
       if (!paymentIntent) {
@@ -33,10 +70,8 @@ const CheckoutReturn: React.FC = () => {
       switch (paymentIntent.status) {
         case 'succeeded':
           setStatus('success');
-          // Redirect to success page after a short delay
-          setTimeout(() => {
-            navigate('/checkout/success?payment_intent=' + paymentIntent.id);
-          }, 2000);
+          // Create order and redirect
+          createOrderAndRedirect(paymentIntent);
           break;
         case 'processing':
           setStatus('loading');
@@ -58,7 +93,7 @@ const CheckoutReturn: React.FC = () => {
       setStatus('error');
       setError('Failed to verify payment status');
     });
-  }, [stripe, searchParams, navigate]);
+  }, [stripe, searchParams, navigate, items, total, clearCart]);
 
   if (status === 'loading') {
     return (

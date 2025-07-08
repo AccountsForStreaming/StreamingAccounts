@@ -34,6 +34,7 @@ function App() {
                   <Route path="/cart" element={<Cart />} />
                   <Route path="/checkout" element={<Checkout />} />
                   <Route path="/checkout/return" element={<CheckoutReturn />} />
+                  <Route path="/checkout/success" element={<CheckoutReturn />} />
                   <Route path="/order-confirmation/:orderId" element={<OrderConfirmation />} />
                   <Route path="/dashboard" element={<Dashboard />} />
                   <Route path="/admin" element={<Admin />} />

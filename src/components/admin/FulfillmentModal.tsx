@@ -118,7 +118,7 @@ export const FulfillmentModal: React.FC<FulfillmentModalProps> = ({
             </div>
           ))}
           <div className="font-semibold mt-2">
-            Total: ${order.totalAmount.toFixed(2)}
+            Total: €{order.totalAmount.toFixed(2)}
           </div>
         </div>
 
