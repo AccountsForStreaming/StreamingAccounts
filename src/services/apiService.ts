@@ -126,6 +126,14 @@ export const paymentService = {
     return response.data!;
   },
 
+  confirmStripeIntent: async (paymentIntentId: string, returnUrl?: string): Promise<any> => {
+    const response: ApiResponse<any> = await api.post('/payments/stripe/confirm-intent', {
+      paymentIntentId,
+      returnUrl,
+    });
+    return response.data!;
+  },
+
   createPayPalOrder: async (amount: number): Promise<{ orderID: string }> => {
     const response: ApiResponse<{ orderID: string }> = await api.post('/payments/paypal/create-order', {
       amount,
