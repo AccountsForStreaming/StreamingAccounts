@@ -121,8 +121,14 @@ const CheckoutForm: React.FC<StripeCheckoutProps> = ({ amount, onSuccess, disabl
 };
 
 const StripeCheckout: React.FC<StripeCheckoutProps> = (props) => {
+  const options = {
+    // Set locale and currency for proper formatting
+    locale: 'en' as const,
+    currency: 'eur',
+  };
+
   return (
-    <Elements stripe={stripePromise}>
+    <Elements stripe={stripePromise} options={options}>
       <CheckoutForm {...props} />
     </Elements>
   );

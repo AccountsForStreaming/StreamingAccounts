@@ -93,7 +93,7 @@ const CartItemCard: React.FC<CartItemCardProps> = ({ item }) => {
             {/* Subtotal */}
             <div className="text-right">
               <div className="text-lg font-bold text-gray-900">
-                ${(product.price * quantity).toFixed(2)}
+                €{(product.price * quantity).toFixed(2)}
               </div>
               <div className="text-sm text-gray-500">
                 {product.stockCount} available
