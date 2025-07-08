@@ -8,7 +8,7 @@ A modern full-stack web application for selling streaming accounts with secure a
 - **Authentication**: Email/password and Google OAuth login
 - **Product Catalog**: Browse streaming accounts with search and filtering
 - **Shopping Cart**: Add/remove items with stock validation
-- **Secure Payments**: Stripe and PayPal integration
+- **Secure Payments**: Stripe integration with all enabled payment methods
 - **Order Management**: Track order history and delivery status
 - **Responsive Design**: Mobile-first approach with Tailwind CSS
 
@@ -34,14 +34,14 @@ A modern full-stack web application for selling streaming accounts with secure a
 - **Firebase Auth** for authentication
 - **React Router** for navigation
 - **Axios** for API calls
-- **Stripe & PayPal** for payments
+- **Stripe** for payments
 
 ### Backend
 - **Node.js** with Express.js
 - **TypeScript** for type safety
 - **Firebase Admin SDK** for backend operations
 - **Firestore** for database
-- **Stripe & PayPal** APIs for payment processing
+- **Stripe** APIs for payment processing
 - **Nodemailer** for email services
 - **JWT** for authentication
 
@@ -56,7 +56,6 @@ A modern full-stack web application for selling streaming accounts with secure a
 - Node.js 18+ 
 - Firebase project with Firestore and Authentication
 - Stripe account for payments
-- PayPal developer account
 
 ### 1. Clone and Install
 
@@ -82,7 +81,6 @@ VITE_FIREBASE_APP_ID=your_app_id
 
 VITE_API_URL=http://localhost:3000/api
 VITE_STRIPE_PUBLISHABLE_KEY=pk_test_your_stripe_key
-VITE_PAYPAL_CLIENT_ID=your_paypal_client_id
 ```
 
 #### Backend (.env)
@@ -95,8 +93,6 @@ FIREBASE_CLIENT_EMAIL=your_service_account_email
 FIREBASE_PRIVATE_KEY=your_private_key
 
 STRIPE_SECRET_KEY=sk_test_your_stripe_secret
-PAYPAL_CLIENT_ID=your_paypal_client_id
-PAYPAL_CLIENT_SECRET=your_paypal_secret
 
 EMAIL_HOST=smtp.gmail.com
 EMAIL_USER=your_email@gmail.com

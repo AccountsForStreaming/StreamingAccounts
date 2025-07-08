@@ -11,8 +11,5 @@ export const config = {
   },
   stripe: {
     publishableKey: import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || 'pk_test_51RiMJFCiYMScPpy1tWvxGa8ZLBN1epgapu7aKjsk4czfLtpQ1zFwh73kjXdQTFFLmsfkpArQ59uNa9PkWvBly18i00FI2UmCTQ'
-  },
-  paypal: {
-    clientId: import.meta.env.VITE_PAYPAL_CLIENT_ID || 'demo-paypal-client'
   }
 };

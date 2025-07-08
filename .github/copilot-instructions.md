@@ -11,7 +11,7 @@ use PowerShell syntax:
 - Tailwind CSS for styling
 - Firebase Authentication (email/password + Google OAuth)
 - React Router for navigation
-- Payment integration with Stripe and PayPal
+- Payment integration with Stripe (supports all payment methods enabled in dashboard)
 - Responsive design for mobile and desktop
 
 ### Backend (Node.js + Express)
@@ -33,7 +33,7 @@ use PowerShell syntax:
 1. User authentication and registration
 2. Product catalog with streaming accounts
 3. Shopping cart and checkout flow
-4. Payment processing (Stripe + PayPal)
+4. Payment processing (Stripe + all enabled payment methods)
 5. User dashboard with order history
 6. Admin panel for inventory and order management
 7. Email notifications for order fulfillment

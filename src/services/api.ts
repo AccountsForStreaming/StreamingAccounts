@@ -77,7 +77,7 @@ export const productService = {
 export const orderService = {
   create: async (orderData: {
     items: Array<{ productId: string; quantity: number }>;
-    paymentMethod: 'stripe' | 'paypal';
+    paymentMethod: 'stripe';
     paymentId?: string;
   }): Promise<Order> => {
     const response = await api.post<ApiResponse<Order>>('/orders', orderData);

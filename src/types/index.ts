@@ -82,7 +82,7 @@ export type OrderStatus =
   | 'cancelled' 
   | 'refunded';
 
-export type PaymentMethod = 'stripe' | 'paypal';
+export type PaymentMethod = 'stripe';
 
 export interface AuthState {
   user: User | null;
