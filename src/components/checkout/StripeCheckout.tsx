@@ -39,10 +39,14 @@ const CheckoutForm: React.FC<StripeCheckoutProps & { clientSecret: string }> = (
 
     try {
       // Confirm payment with Stripe
+      // Construct return URL with proper basename
+      const basename = '/StreamingAccounts';
+      const returnUrl = `${window.location.origin}${basename}/checkout/return`;
+      
       const { error: stripeError, paymentIntent } = await stripe.confirmPayment({
         elements,
         confirmParams: {
-          return_url: `${window.location.origin}/checkout/return`,
+          return_url: returnUrl,
         },
         redirect: 'if_required',
       });
