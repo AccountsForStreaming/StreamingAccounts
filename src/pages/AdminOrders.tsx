@@ -405,9 +405,9 @@ const AdminOrders: React.FC = () => {
                               className="max-w-full h-auto rounded-lg border border-gray-300 cursor-pointer hover:border-gray-400 transition-colors"
                               style={{ maxHeight: '200px' }}
                               onClick={() => handleImageClick(
-                                selectedOrder.fulfillment.screenshotUrl.startsWith('http') 
+                                selectedOrder.fulfillment?.screenshotUrl?.startsWith('http') 
                                   ? selectedOrder.fulfillment.screenshotUrl 
-                                  : `https://streamingaccounts-backend.onrender.com${selectedOrder.fulfillment.screenshotUrl}`,
+                                  : `https://streamingaccounts-backend.onrender.com${selectedOrder.fulfillment?.screenshotUrl}`,
                                 'Account screenshot',
                                 `Order #${selectedOrder.id} - Account Screenshot`
                               )}

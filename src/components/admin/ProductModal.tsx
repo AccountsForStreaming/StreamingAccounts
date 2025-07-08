@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, Upload, AlertCircle } from 'lucide-react';
-import { useAuth } from '../../contexts/AuthContext';
+import { X, AlertCircle } from 'lucide-react';
 import { auth } from '../../lib/firebase';
 
 interface Product {
@@ -29,7 +28,6 @@ const ProductModal: React.FC<ProductModalProps> = ({
   product,
   mode
 }) => {
-  const { user } = useAuth();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   

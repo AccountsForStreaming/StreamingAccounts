@@ -277,9 +277,9 @@ const Dashboard: React.FC = () => {
                               className="max-w-full h-auto rounded-lg border border-green-300 cursor-pointer hover:border-green-400 transition-colors"
                               style={{ maxHeight: '150px' }}
                               onClick={() => handleImageClick(
-                                order.fulfillment.screenshotUrl.startsWith('http') 
+                                order.fulfillment?.screenshotUrl?.startsWith('http') 
                                   ? order.fulfillment.screenshotUrl 
-                                  : `https://streamingaccounts-backend.onrender.com${order.fulfillment.screenshotUrl}`,
+                                  : `https://streamingaccounts-backend.onrender.com${order.fulfillment?.screenshotUrl}`,
                                 'Account verification',
                                 `Order #${order.id} - Verification Screenshot`
                               )}

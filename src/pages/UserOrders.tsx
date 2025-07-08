@@ -29,7 +29,7 @@ const UserOrders: React.FC = () => {
       setOrders(data);
     } catch (error) {
       console.error('Failed to load orders:', error);
-      showToast('Failed to load orders', 'error');
+      showToast('error', 'Failed to load orders');
     } finally {
       setLoading(false);
     }
@@ -41,7 +41,7 @@ const UserOrders: React.FC = () => {
     try {
       setSendingMessage(true);
       await orderService.addMessage(selectedOrder.id, userMessage);
-      showToast('Message sent successfully', 'success');
+      showToast('success', 'Message sent successfully');
       setUserMessage('');
       await loadOrders();
       
@@ -52,7 +52,7 @@ const UserOrders: React.FC = () => {
       }
     } catch (error) {
       console.error('Failed to send message:', error);
-      showToast('Failed to send message', 'error');
+      showToast('error', 'Failed to send message');
     } finally {
       setSendingMessage(false);
     }
@@ -171,7 +171,7 @@ const UserOrders: React.FC = () => {
                   </div>
                   <div className="flex items-center space-x-2">
                     {order.userMessage && (
-                      <MessageSquare className="w-4 h-4 text-blue-500" title="Has message" />
+                      <MessageSquare className="w-4 h-4 text-blue-500" />
                     )}
                     {order.adminResponse && (
                       <div className="w-2 h-2 bg-green-500 rounded-full" title="Admin responded" />
