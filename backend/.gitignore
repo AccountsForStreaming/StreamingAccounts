@@ -17,9 +17,11 @@ build/
 
 # Firebase service account (IMPORTANT!)
 firebase-service-account.json
-*.json
+# Only ignore specific JSON files, not all JSON files
+# *.json (This was too broad - it ignored tsconfig.json!)
 !package.json
 !package-lock.json
+!tsconfig.json
 
 # Logs
 logs/

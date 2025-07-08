@@ -399,16 +399,15 @@ const AdminOrders: React.FC = () => {
                           <span className="text-gray-500 text-sm">Screenshot:</span>
                           <div className="mt-2">
                             <img
-                              src={selectedOrder.fulfillment.screenshotUrl.startsWith('http') 
-                                ? selectedOrder.fulfillment.screenshotUrl 
-                                : `http://localhost:3001${selectedOrder.fulfillment.screenshotUrl}`}
+                              src={selectedOrder.fulfillment.screenshotUrl.startsWith('http')                                ? selectedOrder.fulfillment.screenshotUrl
+                                : `https://streamingaccounts-backend.onrender.com${selectedOrder.fulfillment.screenshotUrl}`}
                               alt="Account screenshot"
                               className="max-w-full h-auto rounded-lg border border-gray-300 cursor-pointer hover:border-gray-400 transition-colors"
                               style={{ maxHeight: '200px' }}
                               onClick={() => handleImageClick(
                                 selectedOrder.fulfillment.screenshotUrl.startsWith('http') 
                                   ? selectedOrder.fulfillment.screenshotUrl 
-                                  : `http://localhost:3001${selectedOrder.fulfillment.screenshotUrl}`,
+                                  : `https://streamingaccounts-backend.onrender.com${selectedOrder.fulfillment.screenshotUrl}`,
                                 'Account screenshot',
                                 `Order #${selectedOrder.id} - Account Screenshot`
                               )}

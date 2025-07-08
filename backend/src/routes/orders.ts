@@ -89,18 +89,18 @@ router.get('/user/:userId', auth, async (req, res, next) => {
 
     const orders = ordersSnapshot.docs.map(doc => {
       const data = doc.data();
-      const order = {
+      const order: any = {
         id: doc.id,
         ...data,
-        createdAt: data.createdAt.toDate(),
-        updatedAt: data.updatedAt.toDate(),
+        createdAt: (data.createdAt as any)?.toDate ? (data.createdAt as any).toDate() : data.createdAt,
+        updatedAt: (data.updatedAt as any)?.toDate ? (data.updatedAt as any).toDate() : data.updatedAt,
       };
 
       // Convert fulfillment date if exists
       if (data.fulfillment && data.fulfillment.fulfilledAt) {
         order.fulfillment = {
           ...data.fulfillment,
-          fulfilledAt: data.fulfillment.fulfilledAt.toDate(),
+          fulfilledAt: (data.fulfillment.fulfilledAt as any)?.toDate ? (data.fulfillment.fulfilledAt as any).toDate() : data.fulfillment.fulfilledAt,
         };
       }
 
@@ -141,15 +141,15 @@ router.get('/:id', auth, async (req, res, next) => {
     const order: Order = {
       ...orderData,
       id: orderDoc.id,
-      createdAt: orderData.createdAt.toDate(),
-      updatedAt: orderData.updatedAt.toDate(),
+      createdAt: (orderData.createdAt as any)?.toDate ? (orderData.createdAt as any).toDate() : orderData.createdAt,
+      updatedAt: (orderData.updatedAt as any)?.toDate ? (orderData.updatedAt as any).toDate() : orderData.updatedAt,
     };
 
     // Convert fulfillment date if exists
     if (orderData.fulfillment && orderData.fulfillment.fulfilledAt) {
       order.fulfillment = {
         ...orderData.fulfillment,
-        fulfilledAt: orderData.fulfillment.fulfilledAt.toDate(),
+        fulfilledAt: (orderData.fulfillment.fulfilledAt as any)?.toDate ? (orderData.fulfillment.fulfilledAt as any).toDate() : orderData.fulfillment.fulfilledAt,
       };
     }
 
@@ -260,18 +260,18 @@ router.get('/admin/all', auth, async (req, res, next) => {
 
     const orders = ordersSnapshot.docs.map(doc => {
       const data = doc.data();
-      const order = {
+      const order: any = {
         id: doc.id,
         ...data,
-        createdAt: data.createdAt.toDate(),
-        updatedAt: data.updatedAt.toDate(),
+        createdAt: (data.createdAt as any)?.toDate ? (data.createdAt as any).toDate() : data.createdAt,
+        updatedAt: (data.updatedAt as any)?.toDate ? (data.updatedAt as any).toDate() : data.updatedAt,
       };
 
       // Convert fulfillment date if exists
       if (data.fulfillment && data.fulfillment.fulfilledAt) {
         order.fulfillment = {
           ...data.fulfillment,
-          fulfilledAt: data.fulfillment.fulfilledAt.toDate(),
+          fulfilledAt: (data.fulfillment.fulfilledAt as any)?.toDate ? (data.fulfillment.fulfilledAt as any).toDate() : data.fulfillment.fulfilledAt,
         };
       }
 

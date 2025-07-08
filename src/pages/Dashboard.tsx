@@ -271,16 +271,15 @@ const Dashboard: React.FC = () => {
                           <div className="mt-3">
                             <p className="text-xs text-green-700 mb-2"><strong>Verification Screenshot:</strong></p>
                             <img
-                              src={order.fulfillment.screenshotUrl.startsWith('http') 
-                                ? order.fulfillment.screenshotUrl 
-                                : `http://localhost:3001${order.fulfillment.screenshotUrl}`}
+                              src={order.fulfillment.screenshotUrl.startsWith('http')                                ? order.fulfillment.screenshotUrl
+                                : `https://streamingaccounts-backend.onrender.com${order.fulfillment.screenshotUrl}`}
                               alt="Account verification"
                               className="max-w-full h-auto rounded-lg border border-green-300 cursor-pointer hover:border-green-400 transition-colors"
                               style={{ maxHeight: '150px' }}
                               onClick={() => handleImageClick(
                                 order.fulfillment.screenshotUrl.startsWith('http') 
                                   ? order.fulfillment.screenshotUrl 
-                                  : `http://localhost:3001${order.fulfillment.screenshotUrl}`,
+                                  : `https://streamingaccounts-backend.onrender.com${order.fulfillment.screenshotUrl}`,
                                 'Account verification',
                                 `Order #${order.id} - Verification Screenshot`
                               )}

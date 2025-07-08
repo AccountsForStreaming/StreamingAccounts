@@ -5,7 +5,7 @@
 ## Project Overview
 
 This is a full-stack web application for selling streaming accounts with the following architecture:
-
+use PowerShell syntax:
 ### Frontend (React + TypeScript + Vite)
 - Modern React application with TypeScript
 - Tailwind CSS for styling
