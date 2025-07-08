@@ -4,5 +4,5 @@ import react from '@vitejs/plugin-react'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: '/WebAccount/', // Replace with your actual repository name
+  base: '/StreamingAccounts/', // Correct repository name
 })
