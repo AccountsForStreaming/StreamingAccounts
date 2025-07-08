@@ -93,6 +93,7 @@ FIREBASE_CLIENT_EMAIL=your_service_account_email
 FIREBASE_PRIVATE_KEY=your_private_key
 
 STRIPE_SECRET_KEY=sk_test_your_stripe_secret
+FRONTEND_URL=http://localhost:5173
 
 EMAIL_HOST=smtp.gmail.com
 EMAIL_USER=your_email@gmail.com

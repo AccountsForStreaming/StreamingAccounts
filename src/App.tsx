@@ -7,6 +7,7 @@ import Home from './pages/Home';
 import Products from './pages/Products';
 import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
+import CheckoutReturn from './components/checkout/CheckoutReturnWrapper';
 import OrderConfirmation from './pages/OrderConfirmation';
 import Dashboard from './pages/Dashboard';
 import Admin from './pages/Admin';
@@ -32,6 +33,7 @@ function App() {
                   <Route path="/products" element={<Products />} />
                   <Route path="/cart" element={<Cart />} />
                   <Route path="/checkout" element={<Checkout />} />
+                  <Route path="/checkout/return" element={<CheckoutReturn />} />
                   <Route path="/order-confirmation/:orderId" element={<OrderConfirmation />} />
                   <Route path="/dashboard" element={<Dashboard />} />
                   <Route path="/admin" element={<Admin />} />
