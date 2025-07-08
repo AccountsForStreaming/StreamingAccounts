@@ -25,7 +25,7 @@ function App() {
   return (
     <PayPalScriptProvider options={paypalOptions}>
       <ToastProvider>
-        <Router>
+        <Router basename="/StreamingAccounts">
           <AuthProvider>
             <CartProvider>
             <Routes>
