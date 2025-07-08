@@ -113,7 +113,7 @@ const CheckoutForm: React.FC<StripeCheckoutProps> = ({ amount, onSuccess, disabl
             <span>Processing...</span>
           </div>
         ) : (
-          `Pay $${amount.toFixed(2)}`
+          `Pay €${amount.toFixed(2)}`
         )}
       </button>
     </form>

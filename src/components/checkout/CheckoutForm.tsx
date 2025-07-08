@@ -4,6 +4,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import { useCart } from '../../contexts/CartContext';
 import StripeCheckout from './StripeCheckout';
 import { apiService } from '../../services/apiService';
+import { auth } from '../../lib/firebase';
 
 interface CheckoutFormProps {
   total: number;
@@ -59,7 +60,41 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ total, onOrderComplete }) =
   };
 
   const handlePayPalSuccess = async (details: any) => {
-    await createOrder('paypal', details.id);
+    try {
+      // Get Firebase ID token from current user
+      const firebaseUser = auth.currentUser;
+      if (!firebaseUser) {
+        throw new Error('User not authenticated');
+      }
+
+      const idToken = await firebaseUser.getIdToken();
+
+      // Capture the order on the backend
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/payments/paypal/capture-order`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${idToken}`,
+        },
+        body: JSON.stringify({
+          orderID: details.id,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to capture PayPal payment');
+      }
+
+      const result = await response.json();
+      if (result.success) {
+        await createOrder('paypal', details.id);
+      } else {
+        throw new Error(result.message || 'PayPal payment failed');
+      }
+    } catch (error) {
+      console.error('PayPal capture error:', error);
+      setError(error instanceof Error ? error.message : 'Failed to process PayPal payment');
+    }
   };
 
   return (
@@ -176,29 +211,51 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ total, onOrderComplete }) =
             <PayPalButtons
               style={{ layout: 'vertical' }}
               disabled={isProcessing}
-              createOrder={(_data, actions) => {
-                return actions.order.create({
-                  intent: 'CAPTURE',
-                  purchase_units: [
-                    {
-                      amount: {
-                        value: total.toFixed(2),
-                        currency_code: 'USD',
-                      },
-                      description: `Streaming accounts order (${items.length} items)`,
+              createOrder={async (_data, _actions) => {
+                try {
+                  // Get Firebase ID token from current user
+                  const firebaseUser = auth.currentUser;
+                  if (!firebaseUser) {
+                    throw new Error('User not authenticated');
+                  }
+
+                  const idToken = await firebaseUser.getIdToken();
+
+                  // Create order on backend
+                  const response = await fetch(`${import.meta.env.VITE_API_URL}/payments/paypal/create-order`, {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json',
+                      'Authorization': `Bearer ${idToken}`,
                     },
-                  ],
-                });
+                    body: JSON.stringify({
+                      amount: total,
+                    }),
+                  });
+
+                  if (!response.ok) {
+                    throw new Error('Failed to create PayPal order');
+                  }
+
+                  const result = await response.json();
+                  if (result.success) {
+                    return result.data.orderID;
+                  } else {
+                    throw new Error(result.message || 'PayPal order creation failed');
+                  }
+                } catch (error) {
+                  console.error('PayPal create order error:', error);
+                  setError(error instanceof Error ? error.message : 'Failed to create PayPal order');
+                  throw error;
+                }
               }}
               onApprove={async (_data, actions) => {
-                if (actions.order) {
-                  try {
-                    const details = await actions.order.capture();
-                    await handlePayPalSuccess(details);
-                  } catch (error) {
-                    console.error('PayPal capture error:', error);
-                    setError('Failed to process PayPal payment');
-                  }
+                try {
+                  const details = await actions.order?.capture();
+                  await handlePayPalSuccess(details);
+                } catch (error) {
+                  console.error('PayPal capture error:', error);
+                  setError('Failed to process PayPal payment');
                 }
               }}
               onError={(error) => {

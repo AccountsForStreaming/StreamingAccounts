@@ -30,7 +30,7 @@ const OrderSummary: React.FC<OrderSummaryProps> = ({ items, total }) => {
               <div className="flex items-center justify-between mt-1">
                 <span className="text-sm text-gray-600">Qty: {item.quantity}</span>
                 <span className="text-sm font-medium text-gray-900">
-                  ${(item.product.price * item.quantity).toFixed(2)}
+                  €{(item.product.price * item.quantity).toFixed(2)}
                 </span>
               </div>
             </div>

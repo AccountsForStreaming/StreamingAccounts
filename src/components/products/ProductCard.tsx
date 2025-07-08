@@ -83,7 +83,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         {/* Price and Add to Cart */}
         <div className="flex items-center justify-between pt-4">
           <div className="text-2xl font-bold text-primary-600">
-            ${product.price.toFixed(2)}
+            €{product.price.toFixed(2)}
           </div>
           <button
             onClick={handleAddToCart}

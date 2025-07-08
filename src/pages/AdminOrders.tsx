@@ -187,7 +187,7 @@ const AdminOrders: React.FC = () => {
                     Order #{order.id.slice(-8)}
                   </div>
                   <div className="text-sm text-gray-600">
-                    {order.userEmail} • ${order.totalAmount.toFixed(2)}
+                    {order.userEmail} • €{order.totalAmount.toFixed(2)}
                   </div>
                 </div>
 
@@ -235,7 +235,7 @@ const AdminOrders: React.FC = () => {
                     </div>
                     <div>
                       <span className="text-gray-500">Total:</span>
-                      <div className="font-medium">${selectedOrder.totalAmount.toFixed(2)}</div>
+                      <div className="font-medium">€{selectedOrder.totalAmount.toFixed(2)}</div>
                     </div>
                     <div>
                       <span className="text-gray-500">Payment:</span>
@@ -263,8 +263,8 @@ const AdminOrders: React.FC = () => {
                           <div className="text-sm text-gray-500">Qty: {item.quantity}</div>
                         </div>
                         <div className="text-right">
-                          <div className="font-medium">${item.totalPrice.toFixed(2)}</div>
-                          <div className="text-sm text-gray-500">${item.unitPrice.toFixed(2)} each</div>
+                          <div className="font-medium">€{item.totalPrice.toFixed(2)}</div>
+                          <div className="text-sm text-gray-500">€{item.unitPrice.toFixed(2)} each</div>
                         </div>
                       </div>
                     ))}

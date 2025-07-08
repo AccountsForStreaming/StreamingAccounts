@@ -82,7 +82,7 @@ const ProductQuickView: React.FC<ProductQuickViewProps> = ({ product, isOpen, on
                 <div className="flex items-center justify-between">
                   <div>
                     <span className="text-3xl font-bold text-primary-600">
-                      ${product.price.toFixed(2)}
+                      €{product.price.toFixed(2)}
                     </span>
                   </div>
                   <div className="text-right">
@@ -149,7 +149,7 @@ const ProductQuickView: React.FC<ProductQuickViewProps> = ({ product, isOpen, on
                     className="flex-1 bg-primary-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-primary-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
                   >
                     <ShoppingCart className="w-5 h-5 mr-2" />
-                    Add to Cart - ${(product.price * quantity).toFixed(2)}
+                    Add to Cart - €{(product.price * quantity).toFixed(2)}
                   </button>
                   <button
                     onClick={onClose}

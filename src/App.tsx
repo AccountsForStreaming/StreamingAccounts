@@ -17,7 +17,7 @@ import Register from './components/auth/Register';
 // PayPal configuration
 const paypalOptions = {
   clientId: import.meta.env.VITE_PAYPAL_CLIENT_ID || 'test',
-  currency: 'USD',
+  currency: 'EUR',
   intent: 'capture',
 };
 

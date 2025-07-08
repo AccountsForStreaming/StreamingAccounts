@@ -6,7 +6,7 @@ import App from './App.tsx'
 
 const paypalOptions = {
   clientId: import.meta.env.VITE_PAYPAL_CLIENT_ID || '',
-  currency: 'USD',
+  currency: 'EUR',
   intent: 'capture',
 }
 

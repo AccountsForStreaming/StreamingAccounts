@@ -171,7 +171,7 @@ const Dashboard: React.FC = () => {
               <div className="ml-4">
                 <p className="text-sm font-medium text-gray-600">Total Spent</p>
                 <p className="text-2xl font-bold text-gray-900">
-                  ${orders.reduce((sum, order) => sum + order.totalAmount, 0).toFixed(2)}
+                  €{orders.reduce((sum, order) => sum + order.totalAmount, 0).toFixed(2)}
                 </p>
               </div>
             </div>
@@ -210,7 +210,7 @@ const Dashboard: React.FC = () => {
                         {order.status.charAt(0).toUpperCase() + order.status.slice(1)}
                       </span>
                       <span className="text-lg font-bold text-gray-900">
-                        ${order.totalAmount.toFixed(2)}
+                        €{order.totalAmount.toFixed(2)}
                       </span>
                     </div>
                   </div>
@@ -221,7 +221,7 @@ const Dashboard: React.FC = () => {
                         <span className="text-gray-600">
                           {item.productName} x{item.quantity}
                         </span>
-                        <span className="text-gray-900">${item.totalPrice.toFixed(2)}</span>
+                        <span className="text-gray-900">€{item.totalPrice.toFixed(2)}</span>
                       </div>
                     ))}
                   </div>
