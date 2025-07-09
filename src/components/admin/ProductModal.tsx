@@ -237,11 +237,19 @@ const ProductModal: React.FC<ProductModalProps> = ({
               name="description"
               value={formData.description}
               onChange={handleInputChange}
-              rows={3}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
-              placeholder="Describe the product features and validity period..."
+              rows={5}
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 resize-vertical"
+              placeholder="Describe the product features and validity period...
+
+You can use multiple lines to format your description.
+• Use bullet points for features
+• Add line breaks for better readability
+• Include important details about delivery and usage"
               required
             />
+            <p className="text-xs text-gray-500 mt-1">
+              Tip: Use line breaks to format your description. The first 100 characters will show in the product card.
+            </p>
           </div>
 
           {/* Price and Stock - Side by side */}

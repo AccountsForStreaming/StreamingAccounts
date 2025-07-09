@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { X, ShoppingCart, Star, Package, Clock, Shield } from 'lucide-react';
 import type { Product } from '../../types';
 import { useCart } from '../../contexts/CartContext';
+import { formatDescription } from '../../utils/textUtils';
 
 interface ProductQuickViewProps {
   product: Product | null;
@@ -100,7 +101,13 @@ const ProductQuickView: React.FC<ProductQuickViewProps> = ({ product, isOpen, on
               {/* Description */}
               <div>
                 <h3 className="font-semibold text-gray-900 mb-2">Description</h3>
-                <p className="text-gray-600 leading-relaxed">{product.description}</p>
+                <div className="text-gray-600 leading-relaxed space-y-2">
+                  {formatDescription(product.description).map((line, index) => (
+                    <p key={index} className={line ? '' : 'h-2'}>
+                      {line || ''}
+                    </p>
+                  ))}
+                </div>
               </div>
 
               {/* Features */}

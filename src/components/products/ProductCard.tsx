@@ -3,6 +3,7 @@ import { ShoppingCart, Star, Eye } from 'lucide-react';
 import type { Product } from '../../types';
 import { useCart } from '../../contexts/CartContext';
 import ProductQuickView from './ProductQuickView';
+import { truncateText, shouldTruncate } from '../../utils/textUtils';
 
 interface ProductCardProps {
   product: Product;
@@ -20,6 +21,13 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const handleCardClick = () => {
     setShowQuickView(true);
   };
+
+  const handleShowMore = (e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevent triggering the card click
+    setShowQuickView(true);
+  };
+
+  const shouldShowMoreButton = shouldTruncate(product.description, 100);
 
   return (
     <>
@@ -48,8 +56,20 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         <div className="space-y-3">
           <div>
             <h3 className="text-lg font-semibold text-gray-900">{product.name}</h3>
-          <p className="text-sm text-gray-600 mt-1">{product.description}</p>
-        </div>
+            <div className="text-sm text-gray-600 mt-1">
+              <p className="leading-relaxed">
+                {truncateText(product.description, 100)}
+              </p>
+              {shouldShowMoreButton && (
+                <button
+                  onClick={handleShowMore}
+                  className="text-primary-600 hover:text-primary-700 font-medium mt-1 transition-colors text-sm"
+                >
+                  Show more
+                </button>
+              )}
+            </div>
+          </div>
 
         {/* Category and Stock */}
         <div className="flex items-center justify-between text-sm">
