@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { X, AlertCircle } from 'lucide-react';
 import { auth } from '../../lib/firebase';
+import ImageUpload from './ImageUpload';
 
 interface Product {
   id: string;
@@ -287,23 +288,16 @@ const ProductModal: React.FC<ProductModalProps> = ({
             </select>
           </div>
 
-          {/* Image URL */}
+          {/* Product Image */}
           <div>
-            <label htmlFor="imageUrl" className="block text-sm font-medium text-gray-700 mb-2">
-              Image URL
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Product Image
             </label>
-            <input
-              type="url"
-              id="imageUrl"
-              name="imageUrl"
-              value={formData.imageUrl}
-              onChange={handleInputChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
-              placeholder="https://example.com/image.jpg"
+            <ImageUpload
+              onImageUploaded={(imageUrl) => setFormData(prev => ({ ...prev, imageUrl }))}
+              currentImageUrl={formData.imageUrl}
+              disabled={loading}
             />
-            <p className="text-sm text-gray-500 mt-1">
-              Optional: Enter a URL for the product image
-            </p>
           </div>
 
           {/* Active Status */}

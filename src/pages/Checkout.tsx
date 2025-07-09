@@ -5,12 +5,16 @@ import { useAuth } from '../contexts/AuthContext';
 import CheckoutForm from '../components/checkout/CheckoutForm';
 import OrderSummary from '../components/checkout/OrderSummary';
 import LoadingSpinner from '../components/ui/LoadingSpinner';
+import { calculateFeeForMethod, type FeeCalculation } from '../utils/feeCalculator';
 
 const Checkout: React.FC = () => {
   const { items, total, clearCart } = useCart();
   const { user } = useAuth();
   const navigate = useNavigate();
   const [isProcessing, setIsProcessing] = useState(false);
+  const [feeCalculation, setFeeCalculation] = useState<FeeCalculation>(() => 
+    calculateFeeForMethod(total, 'card')
+  );
 
   // Redirect to login if not authenticated
   React.useEffect(() => {
@@ -25,6 +29,10 @@ const Checkout: React.FC = () => {
       navigate('/cart');
     }
   }, [items.length, navigate]);
+
+  const handlePaymentMethodChange = (_methodId: string, calculation: FeeCalculation) => {
+    setFeeCalculation(calculation);
+  };
 
   const handleOrderComplete = async (orderId: string) => {
     try {
@@ -67,14 +75,18 @@ const Checkout: React.FC = () => {
         {/* Checkout Form */}
         <div className="lg:order-1">
           <CheckoutForm 
-            total={total}
+            total={feeCalculation.finalAmount}
             onOrderComplete={handleOrderComplete}
           />
         </div>
 
         {/* Order Summary */}
         <div className="lg:order-2">
-          <OrderSummary items={items} total={total} />
+          <OrderSummary 
+            items={items} 
+            total={total} 
+            onPaymentMethodChange={handlePaymentMethodChange}
+          />
         </div>
       </div>
     </div>
