@@ -1,22 +1,27 @@
-# StreamAccounts - Full-Stack Streaming Accounts Platform
+# Shahid VIP Services - Premium Arabic Entertainment Subscriptions
 
-A modern full-stack web application for selling streaming accounts with secure authentication, payment processing, and admin management.
+Your trusted source for premium Shahid VIP subscriptions and digital streaming services. Get instant access to unlimited Arabic entertainment with our verified accounts and reliable service.
 
-## 🚀 Features
+## 🌟 What We Offer
 
-### User Features
-- **Authentication**: Email/password and Google OAuth login
-- **Product Catalog**: Browse streaming accounts with search and filtering
-- **Shopping Cart**: Add/remove items with stock validation
-- **Secure Payments**: Stripe integration with all enabled payment methods
-- **Order Management**: Track order history and delivery status
-- **Responsive Design**: Mobile-first approach with Tailwind CSS
+### Shahid VIP Subscriptions
+- **1 Month Plans**: Perfect for short-term viewing
+- **3 Month Plans**: Great value for regular viewers  
+- **1 Year Plans**: Best savings for dedicated fans
+- **Instant Delivery**: Get your account details within 24 hours
+- **Verified Accounts**: All accounts are tested and guaranteed working
 
-### Admin Features
-- **Inventory Management**: Add, edit, and manage products
-- **Order Fulfillment**: Process orders and deliver account credentials
-- **User Management**: Multi-admin support with role-based access
-- **Analytics Dashboard**: Track sales and inventory
+### Coming Soon
+- **IPTV Services**: Expand your viewing options with live TV channels
+- **Bundle Deals**: Combined packages for maximum savings
+
+## 🔐 Why Choose Us
+
+- **Secure Payments**: Multiple payment options including PayPal, cards, and digital wallets
+- **24/7 Support**: Get help whenever you need it
+- **Instant Delivery**: Fast and reliable account delivery
+- **Quality Guarantee**: All accounts verified before delivery
+- **User-Friendly**: Easy browsing and purchasing experience
 
 ### Technical Features
 - **Real-time Updates**: Firebase Firestore for live data
@@ -116,8 +121,8 @@ npm run dev
 
 ## 📞 Support
 
-For support, email support@streamaccounts.com or create an issue in the repository.
+For support, email tikmohsh@gmail.com or create an issue in the repository.
 
 ---
 
-**StreamAccounts** - Your trusted source for premium streaming accounts! 🎬🎵📺
+**Shahid VIP Services** - Your trusted source for premium Arabic entertainment subscriptions! 🎬🎵📺

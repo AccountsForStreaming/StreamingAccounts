@@ -55,7 +55,7 @@ const CheckoutReturn: React.FC = () => {
       } catch (orderError) {
         console.error('Error creating order:', orderError);
         setStatus('error');
-        setError('Payment successful but failed to create order. Please contact support.');
+        setError('Payment successful but failed to create order. Please contact support at tikmohsh@gmail.com.');
       }
     };
 

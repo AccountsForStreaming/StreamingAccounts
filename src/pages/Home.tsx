@@ -10,11 +10,11 @@ const Home: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
           <div className="text-center">
             <h1 className="text-4xl md:text-6xl font-bold mb-6">
-              Premium Streaming Accounts
+              Premium Shahid VIP Subscriptions
             </h1>
             <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto opacity-90">
-              Get instant access to your favorite streaming platforms with our secure, 
-              reliable, and affordable account packages.
+              Unlock unlimited Arabic entertainment with verified Shahid VIP accounts. 
+              Choose from 1 month, 3 months, or 1 year plans with instant delivery.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
@@ -39,7 +39,7 @@ const Home: React.FC = () => {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            Why Choose StreamAccounts?
+            Why Choose Shahid VIP Services?
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             We provide secure, instant access to premium streaming services with unmatched reliability and support.
@@ -53,7 +53,7 @@ const Home: React.FC = () => {
             </div>
             <h3 className="text-xl font-semibold mb-2">Instant Delivery</h3>
             <p className="text-gray-600">
-              Get your account credentials immediately after successful payment. No waiting, no delays.
+              Get your Shahid VIP account details within 24 hours after successful payment. Fast and reliable service.
             </p>
           </div>
 
@@ -61,9 +61,9 @@ const Home: React.FC = () => {
             <div className="bg-primary-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
               <Shield className="w-8 h-8 text-primary-600" />
             </div>
-            <h3 className="text-xl font-semibold mb-2">Secure & Reliable</h3>
+            <h3 className="text-xl font-semibold mb-2">Verified Accounts</h3>
             <p className="text-gray-600">
-              All accounts are verified and secured. We guarantee the quality and functionality of every purchase.
+              All Shahid VIP accounts are tested and verified before delivery. We guarantee functionality and quality.
             </p>
           </div>
 
@@ -73,7 +73,7 @@ const Home: React.FC = () => {
             </div>
             <h3 className="text-xl font-semibold mb-2">24/7 Support</h3>
             <p className="text-gray-600">
-              Our dedicated support team is available around the clock to help with any questions or issues.
+              Get help whenever you need it. Our support team is here to assist with your Shahid VIP subscription.
             </p>
           </div>
         </div>
@@ -84,33 +84,35 @@ const Home: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Popular Streaming Services
+              Shahid VIP Subscription Plans
             </h2>
             <p className="text-xl text-gray-600">
-              Access the most popular streaming platforms at unbeatable prices
+              Choose the perfect plan for your Arabic entertainment needs
             </p>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
-              { name: 'Netflix', logo: '🎬', price: '$4.99' },
-              { name: 'Spotify', logo: '🎵', price: '$2.99' },
-              { name: 'Disney+', logo: '🏰', price: '$3.99' },
-              { name: 'Hulu', logo: '📺', price: '$3.49' },
-              { name: 'Amazon Prime', logo: '📦', price: '$4.49' },
-              { name: 'HBO Max', logo: '🎭', price: '$5.99' },
-              { name: 'YouTube Premium', logo: '▶️', price: '$2.49' },
-              { name: 'Apple Music', logo: '🍎', price: '$2.99' },
+              { name: 'Shahid VIP - 1 Month', logo: '📺', price: '€9.99', duration: '30 days of unlimited access' },
+              { name: 'Shahid VIP - 3 Months', logo: '�', price: '€24.99', duration: '90 days of unlimited access', popular: true },
+              { name: 'Shahid VIP - 1 Year', logo: '⭐', price: '€79.99', duration: '365 days of unlimited access' },
             ].map((service) => (
-              <div key={service.name} className="bg-white p-6 rounded-lg shadow-sm text-center hover:shadow-md transition-shadow duration-200">
+              <div key={service.name} className={`bg-white p-6 rounded-lg shadow-sm text-center hover:shadow-md transition-shadow duration-200 ${service.popular ? 'ring-2 ring-primary-500 relative' : ''}`}>
+                {service.popular && (
+                  <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
+                    <span className="bg-primary-500 text-white px-3 py-1 rounded-full text-sm font-semibold">Most Popular</span>
+                  </div>
+                )}
                 <div className="text-4xl mb-3">{service.logo}</div>
                 <h3 className="font-semibold mb-2">{service.name}</h3>
-                <p className="text-primary-600 font-bold">{service.price}</p>
+                <p className="text-primary-600 font-bold text-2xl mb-2">{service.price}</p>
+                <p className="text-gray-600 text-sm">{service.duration}</p>
               </div>
             ))}
           </div>
 
           <div className="text-center mt-12">
+            <p className="text-gray-600 mb-4">More services coming soon: IPTV, Live TV Channels, and Bundle Deals!</p>
             <Link
               to="/products"
               className="btn-primary"
@@ -137,14 +139,14 @@ const Home: React.FC = () => {
               comment: 'Amazing service! Got my Netflix account instantly and it works perfectly. Great prices too!',
             },
             {
-              name: 'Mike Chen',
+              name: 'Omar Khalil',
               rating: 5,
-              comment: 'Been using StreamAccounts for months. Never had any issues and the support team is fantastic.',
+              comment: 'Been using Shahid VIP Services for months. Never had any issues with my subscription and the support team is fantastic.',
             },
             {
-              name: 'Emily Davis',
+              name: 'Layla Mansour',
               rating: 5,
-              comment: 'Best place to get streaming accounts. Reliable, fast, and affordable. Highly recommended!',
+              comment: 'Best place to get Shahid VIP accounts. Reliable, fast delivery, and great Arabic content selection. Highly recommended!',
             },
           ].map((testimonial, index) => (
             <div key={index} className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
@@ -164,10 +166,10 @@ const Home: React.FC = () => {
       <section className="bg-primary-600 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Ready to Get Started?
+            Start Your Shahid VIP Journey Today
           </h2>
           <p className="text-xl mb-8 max-w-2xl mx-auto opacity-90">
-            Join thousands of satisfied customers and start enjoying premium streaming services today.
+            Join thousands of satisfied customers enjoying unlimited Arabic entertainment with our verified Shahid VIP accounts.
           </p>
           <Link
             to="/register"

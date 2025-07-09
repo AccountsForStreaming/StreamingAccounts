@@ -11,6 +11,8 @@ import CheckoutReturn from './components/checkout/CheckoutReturnWrapper';
 import OrderConfirmation from './pages/OrderConfirmation';
 import Dashboard from './pages/Dashboard';
 import Admin from './pages/Admin';
+import Terms from './pages/Terms';
+import Contact from './pages/Contact';
 import Login from './components/auth/Login';
 import Register from './components/auth/Register';
 
@@ -38,6 +40,8 @@ function App() {
                   <Route path="/order-confirmation/:orderId" element={<OrderConfirmation />} />
                   <Route path="/dashboard" element={<Dashboard />} />
                   <Route path="/admin" element={<Admin />} />
+                  <Route path="/terms" element={<Terms />} />
+                  <Route path="/contact" element={<Contact />} />
                   {/* Add more routes here as we create more pages */}
                 </Routes>
               </Layout>

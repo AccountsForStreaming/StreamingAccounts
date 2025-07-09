@@ -11,13 +11,13 @@ const Footer: React.FC = () => {
           <div className="col-span-1 md:col-span-2">
             <Link to="/" className="flex items-center space-x-2 mb-4">
               <div className="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-lg">SA</span>
+                <span className="text-white font-bold text-lg">SV</span>
               </div>
-              <span className="text-xl font-bold">StreamAccounts</span>
+              <span className="text-xl font-bold">Shahid VIP</span>
             </Link>
             <p className="text-gray-300 mb-4 max-w-md">
-              Your trusted source for premium streaming accounts. Get instant access to your favorite 
-              platforms with our secure and reliable service.
+              Your trusted source for premium Shahid VIP subscriptions. Get instant access to exclusive 
+              Arabic content with our secure and reliable service.
             </p>
             <div className="flex space-x-4">
               <a href="#" className="text-gray-400 hover:text-white transition-colors">
@@ -92,11 +92,11 @@ const Footer: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm text-gray-300">
             <div className="flex items-center">
               <Mail className="w-4 h-4 mr-2" />
-              <span>support@streamaccounts.com</span>
+              <span>tikmohsh@gmail.com</span>
             </div>
             <div className="flex items-center">
               <Phone className="w-4 h-4 mr-2" />
-              <span>+1 (555) 123-4567</span>
+              <span>+353899564106</span>
             </div>
             <div className="flex items-center">
               <MapPin className="w-4 h-4 mr-2" />
@@ -107,7 +107,7 @@ const Footer: React.FC = () => {
 
         {/* Copyright */}
         <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-          <p>&copy; 2025 StreamAccounts. All rights reserved.</p>
+          <p>&copy; 2025 Shahid VIP. All rights reserved.</p>
         </div>
       </div>
     </footer>
