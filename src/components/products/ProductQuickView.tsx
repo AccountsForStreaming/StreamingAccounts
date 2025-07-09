@@ -23,7 +23,7 @@ const ProductQuickView: React.FC<ProductQuickViewProps> = ({ product, isOpen, on
   const features = [
     { icon: Shield, text: 'Secure Account Access' },
     { icon: Clock, text: 'Instant Delivery' },
-    { icon: Package, text: 'Valid for 1 Month' },
+    { icon: Package, text: product.validity || 'Valid for 1 Month' },
   ];
 
   return (
@@ -165,19 +165,15 @@ const ProductQuickView: React.FC<ProductQuickViewProps> = ({ product, isOpen, on
                 <div className="grid grid-cols-2 gap-4 text-sm">
                   <div>
                     <span className="font-medium text-gray-900">Delivery:</span>
-                    <span className="text-gray-600 ml-1">Instant</span>
+                    <span className="text-gray-600 ml-1">{product.delivery || 'Within 24 Hours'}</span>
                   </div>
                   <div>
                     <span className="font-medium text-gray-900">Validity:</span>
-                    <span className="text-gray-600 ml-1">1 Month</span>
+                    <span className="text-gray-600 ml-1">{product.validity || '1 Month'}</span>
                   </div>
                   <div>
                     <span className="font-medium text-gray-900">Support:</span>
-                    <span className="text-gray-600 ml-1">24/7</span>
-                  </div>
-                  <div>
-                    <span className="font-medium text-gray-900">Warranty:</span>
-                    <span className="text-gray-600 ml-1">7 Days</span>
+                    <span className="text-gray-600 ml-1">{product.support || '24/7'}</span>
                   </div>
                 </div>
               </div>

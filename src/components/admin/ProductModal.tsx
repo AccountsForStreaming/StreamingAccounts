@@ -12,6 +12,9 @@ interface Product {
   category: string;
   imageUrl?: string;
   isActive: boolean;
+  validity?: string;
+  delivery?: string;
+  support?: string;
 }
 
 interface ProductModalProps {
@@ -39,7 +42,10 @@ const ProductModal: React.FC<ProductModalProps> = ({
     stockCount: '',
     category: 'Streaming',
     imageUrl: '',
-    isActive: true
+    isActive: true,
+    validity: '1 Month',
+    delivery: 'Within 24 Hours',
+    support: '24/7'
   });
 
   const categories = [
@@ -61,7 +67,10 @@ const ProductModal: React.FC<ProductModalProps> = ({
         stockCount: product.stockCount.toString(),
         category: product.category,
         imageUrl: product.imageUrl || '',
-        isActive: product.isActive
+        isActive: product.isActive,
+        validity: product.validity || '1 Month',
+        delivery: product.delivery || 'Within 24 Hours',
+        support: product.support || '24/7'
       });
     } else {
       // Reset form for create mode
@@ -72,7 +81,10 @@ const ProductModal: React.FC<ProductModalProps> = ({
         stockCount: '',
         category: 'Streaming',
         imageUrl: '',
-        isActive: true
+        isActive: true,
+        validity: '1 Month',
+        delivery: 'Within 24 Hours',
+        support: '24/7'
       });
     }
     setError(null);
@@ -149,7 +161,10 @@ const ProductModal: React.FC<ProductModalProps> = ({
           stockCount: parseInt(formData.stockCount),
           category: formData.category,
           imageUrl: formData.imageUrl.trim() || null,
-          isActive: formData.isActive
+          isActive: formData.isActive,
+          validity: formData.validity.trim(),
+          delivery: formData.delivery.trim(),
+          support: formData.support.trim()
         }),
       });
 
@@ -298,6 +313,61 @@ const ProductModal: React.FC<ProductModalProps> = ({
               currentImageUrl={formData.imageUrl}
               disabled={loading}
             />
+          </div>
+
+          {/* Quick View Information */}
+          <div className="border-t border-gray-200 pt-6">
+            <h3 className="text-lg font-medium text-gray-900 mb-4">Quick View Information</h3>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {/* Validity */}
+              <div>
+                <label htmlFor="validity" className="block text-sm font-medium text-gray-700 mb-2">
+                  Validity Period
+                </label>
+                <input
+                  type="text"
+                  id="validity"
+                  name="validity"
+                  value={formData.validity}
+                  onChange={handleInputChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                  placeholder="e.g., 1 Month, 3 Months, 1 Year"
+                />
+              </div>
+
+              {/* Delivery */}
+              <div>
+                <label htmlFor="delivery" className="block text-sm font-medium text-gray-700 mb-2">
+                  Delivery Time
+                </label>
+                <input
+                  type="text"
+                  id="delivery"
+                  name="delivery"
+                  value={formData.delivery}
+                  onChange={handleInputChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                  placeholder="e.g., Within 24 Hours, Instant"
+                />
+              </div>
+
+              {/* Support */}
+              <div>
+                <label htmlFor="support" className="block text-sm font-medium text-gray-700 mb-2">
+                  Support Available
+                </label>
+                <input
+                  type="text"
+                  id="support"
+                  name="support"
+                  value={formData.support}
+                  onChange={handleInputChange}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                  placeholder="e.g., 24/7, Business Hours"
+                />
+              </div>
+            </div>
           </div>
 
           {/* Active Status */}

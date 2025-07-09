@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
-import { Upload, X, ImageIcon, Loader } from 'lucide-react';
+import { Upload, X, ImageIcon, Loader, Folder } from 'lucide-react';
 import { ImageUploadService } from '../../services/imageUpload';
+import ImageBrowser from './ImageBrowser';
 
 interface ImageUploadProps {
   onImageUploaded: (imageUrl: string) => void;
@@ -19,6 +20,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
   const [uploadProgress, setUploadProgress] = useState(0);
   const [error, setError] = useState<string | null>(null);
   const [previewUrl, setPreviewUrl] = useState(currentImageUrl || '');
+  const [showImageBrowser, setShowImageBrowser] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileSelect = async (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -97,6 +99,17 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
     }
   };
 
+  const handleBrowseImages = () => {
+    setShowImageBrowser(true);
+  };
+
+  const handleSelectFromBrowser = (imageUrl: string) => {
+    setPreviewUrl(imageUrl);
+    onImageUploaded(imageUrl);
+    setShowImageBrowser(false);
+    setError(null);
+  };
+
   return (
     <div className={`space-y-3 ${className}`}>
       {/* Hidden file input */}
@@ -127,9 +140,18 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                 onClick={triggerFileInput}
                 disabled={disabled || uploading}
                 className="bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-full transition-colors disabled:opacity-50"
-                title="Change image"
+                title="Upload new image"
               >
                 <Upload className="w-4 h-4" />
+              </button>
+              <button
+                type="button"
+                onClick={handleBrowseImages}
+                disabled={disabled || uploading}
+                className="bg-green-600 hover:bg-green-700 text-white p-2 rounded-full transition-colors disabled:opacity-50"
+                title="Browse storage"
+              >
+                <Folder className="w-4 h-4" />
               </button>
               <button
                 type="button"
@@ -190,6 +212,16 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
                     PNG, JPG, WebP up to 5MB
                   </p>
                 </div>
+                <div className="flex space-x-2 justify-center">
+                  <button
+                    type="button"
+                    onClick={handleBrowseImages}
+                    disabled={disabled}
+                    className="text-sm text-blue-600 hover:text-blue-700 underline disabled:opacity-50"
+                  >
+                    Browse uploaded images
+                  </button>
+                </div>
               </div>
             )}
           </div>
@@ -210,6 +242,14 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
         <p>• Maximum file size: 5MB</p>
         <p>• Images will be automatically optimized</p>
       </div>
+      
+      {/* Image Browser Modal */}
+      <ImageBrowser
+        isOpen={showImageBrowser}
+        onClose={() => setShowImageBrowser(false)}
+        onSelectImage={handleSelectFromBrowser}
+        currentImageUrl={previewUrl}
+      />
     </div>
   );
 };

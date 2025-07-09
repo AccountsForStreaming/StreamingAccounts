@@ -18,6 +18,9 @@ interface Product {
   isActive: boolean;
   createdAt: Date;
   updatedAt: Date;
+  validity?: string;
+  delivery?: string;
+  support?: string;
 }
 
 const Admin: React.FC = () => {

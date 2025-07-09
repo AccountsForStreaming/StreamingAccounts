@@ -18,6 +18,10 @@ export interface Product {
   isActive: boolean;
   createdAt: Date;
   updatedAt: Date;
+  // Quick view information
+  validity?: string;
+  delivery?: string;
+  support?: string;
 }
 
 export interface CartItem {
