@@ -13,6 +13,10 @@ import Dashboard from './pages/Dashboard';
 import Admin from './pages/Admin';
 import Terms from './pages/Terms';
 import Contact from './pages/Contact';
+import About from './pages/About';
+import Help from './pages/Help';
+import Privacy from './pages/Privacy';
+import Refund from './pages/Refund';
 import Login from './components/auth/Login';
 import Register from './components/auth/Register';
 
@@ -42,6 +46,10 @@ function App() {
                   <Route path="/admin" element={<Admin />} />
                   <Route path="/terms" element={<Terms />} />
                   <Route path="/contact" element={<Contact />} />
+                  <Route path="/about" element={<About />} />
+                  <Route path="/help" element={<Help />} />
+                  <Route path="/privacy" element={<Privacy />} />
+                  <Route path="/refund" element={<Refund />} />
                   {/* Add more routes here as we create more pages */}
                 </Routes>
               </Layout>

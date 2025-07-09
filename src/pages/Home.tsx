@@ -14,7 +14,7 @@ const Home: React.FC = () => {
             </h1>
             <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto opacity-90">
               Unlock unlimited Arabic entertainment with verified Shahid VIP accounts. 
-              Choose from 1 month, 3 months, or 1 year plans with instant delivery.
+              Choose from 3 months, 6 months, or 1 year plans with instant delivery.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
@@ -93,9 +93,9 @@ const Home: React.FC = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
-              { name: 'Shahid VIP - 1 Month', logo: '📺', price: '€9.99', duration: '30 days of unlimited access' },
-              { name: 'Shahid VIP - 3 Months', logo: '�', price: '€24.99', duration: '90 days of unlimited access', popular: true },
-              { name: 'Shahid VIP - 1 Year', logo: '⭐', price: '€79.99', duration: '365 days of unlimited access' },
+              { name: 'Shahid VIP - 3 Months', logo: '📺', price: '€9.99', duration: '90 days of unlimited access' },
+              { name: 'Shahid VIP - 6 Months', logo: '🎬', price: '€18.99', duration: '180 days of unlimited access', popular: true },
+              { name: 'Shahid VIP - 1 Year', logo: '⭐', price: '€32.99', duration: '365 days of unlimited access' },
             ].map((service) => (
               <div key={service.name} className={`bg-white p-6 rounded-lg shadow-sm text-center hover:shadow-md transition-shadow duration-200 ${service.popular ? 'ring-2 ring-primary-500 relative' : ''}`}>
                 {service.popular && (

@@ -22,7 +22,7 @@ const Terms: React.FC = () => {
             <section className="mb-8">
               <h2 className="text-2xl font-semibold text-gray-900 mb-4">2. Service Description</h2>
               <p className="text-gray-700 mb-4">
-                We provide premium Shahid VIP subscription accounts with various duration options (1 month, 3 months, 1 year). Our service includes instant delivery of account credentials and 24/7 customer support.
+                We provide premium Shahid VIP subscription accounts with various duration options (3 months, 6 months, 1 year). Our service includes instant delivery of account credentials and 24/7 customer support.
               </p>
             </section>
 

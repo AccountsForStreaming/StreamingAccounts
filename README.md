@@ -1,13 +1,13 @@
-# Shahid VIP Services - Premium Arabic Entertainment Subscriptions
+# StreamingAccounts - Premium Shahid VIP & IPTV Services
 
 Your trusted source for premium Shahid VIP subscriptions and digital streaming services. Get instant access to unlimited Arabic entertainment with our verified accounts and reliable service.
 
 ## 🌟 What We Offer
 
 ### Shahid VIP Subscriptions
-- **1 Month Plans**: Perfect for short-term viewing
-- **3 Month Plans**: Great value for regular viewers  
-- **1 Year Plans**: Best savings for dedicated fans
+- **3 Month Plans**: Perfect for regular viewing - €9.99
+- **6 Month Plans**: Great value for extended entertainment - €18.99 
+- **1 Year Plans**: Best savings for dedicated fans - €32.99
 - **Instant Delivery**: Get your account details within 24 hours
 - **Verified Accounts**: All accounts are tested and guaranteed working
 
@@ -125,4 +125,4 @@ For support, email tikmohsh@gmail.com or create an issue in the repository.
 
 ---
 
-**Shahid VIP Services** - Your trusted source for premium Arabic entertainment subscriptions! 🎬🎵📺
+**StreamingAccounts** - Your trusted source for premium Arabic entertainment subscriptions! 🎬🎵📺
